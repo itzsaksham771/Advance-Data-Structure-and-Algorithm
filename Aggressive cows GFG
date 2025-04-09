@@ -6,7 +6,7 @@ class Solution {
         
         int low = 1;
         int high = stalls[n-1] - stalls[0];
-        if(low<high) {
+        while(low<=high) {
             int mid = (low+high)/2;
             
             if(canWePlace(stalls,mid,k)==true) {
