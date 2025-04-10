@@ -1,0 +1,30 @@
+class Solution {
+    public int maxDistance(int[] position, int m) {
+        Arrays.sort(position);
+        int minDist = 1;
+        int maxDist = position[position.length-1];
+        int optimal = 0;
+        while(minDist<=maxDist) {
+            int mid = minDist + (maxDist - minDist)/2;
+            if(canPossible(position, m, mid)) {
+                optimal = mid;
+                minDist = mid+1;
+            }
+            else {
+                maxDist = mid-1;
+            }
+        }
+        return optimal;
+    }
+    public static boolean canPossible(int position[], int m, int max) {
+        int count = 1;
+        int last = position[0];
+        for(int i=0; i<position.length; i++) {
+            if(position[i] - last >=max) {
+                last = position[i];
+                count++;
+            }
+        }
+        return count>=m;
+    }
+}
