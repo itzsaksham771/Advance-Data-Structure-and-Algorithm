@@ -1,0 +1,45 @@
+class Solution {
+    public int minDays(int[] bloomDay, int m, int k) {
+
+        if(bloomDay.length < m*k) return -1;
+
+        int minDay = 0;
+        int maxDay = 0;
+        int ans = -1;
+        for(int a : bloomDay) {
+            minDay = Math.min(minDay, a);
+            maxDay = Math.max(maxDay, a);
+        }
+        while(minDay<=maxDay) {
+            int mid = (minDay+maxDay)/2;
+            if(canPossible(bloomDay, mid, m,k)==true) {
+                ans = mid;
+              maxDay = mid-1;  
+            }
+            else {
+                minDay = mid+1;
+            }
+        }
+        return ans;
+    }
+     public static boolean canPossible(int[] bloomDay, int day, int m, int k) {
+        int count = 0;
+        int noOfBqts = 0;
+
+        for (int i = 0; i < bloomDay.length; i++) {
+            if (bloomDay[i] <= day) {
+                count++;
+                if (count == k) {
+                    noOfBqts++;
+                    count = 0;
+                }
+            } else {
+                count = 0;
+            }
+
+            if (noOfBqts >= m) return true;
+        }
+
+        return false;
+    }
+}
