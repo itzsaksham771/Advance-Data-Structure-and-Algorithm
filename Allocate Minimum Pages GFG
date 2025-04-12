@@ -1,0 +1,38 @@
+class Solution {
+    public static int findPages(int[] arr, int k) {
+        // code here
+        if( k>arr.length) return -1;
+        int low = 0;
+        int high = 0;
+        for(int a : arr) {
+            low = Math.max(low,a);
+            high = high + a;
+        }
+        while(low<=high) {
+            int mid = (low + high)/2;
+            int students = countStudents(arr,mid);
+            if(students > k) {
+                low = mid+1;
+            }
+            else {
+                high = mid-1;
+            }
+        }
+        return low;
+    }
+    
+    public static int countStudents(int arr[], int pages) {
+        int stu = 1;
+        int pageOfStudent = 0;
+        for(int i=0; i<arr.length; i++) {
+            if(pageOfStudent + arr[i] <= pages) {
+                pageOfStudent += arr[i];
+            }
+            else {
+                stu++;
+                pageOfStudent = arr[i];
+            }
+        }
+        return stu;
+    }
+}  
