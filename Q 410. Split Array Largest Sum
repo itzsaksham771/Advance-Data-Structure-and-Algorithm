@@ -1,0 +1,35 @@
+class Solution {
+    public int splitArray(int[] nums, int k) {
+        int low = 0;
+        int high = 0;
+        for(int a : nums) {
+            low = Math.max(low , a);
+            high += a;
+        }
+        while(low<=high) {
+            int mid = (low + high)/2;
+            int ways = countWays(nums,mid);
+            if(ways > k) {
+                low = mid+1;
+            }
+            else {
+                high = mid-1;
+            }
+        }
+        return low;
+    }
+    public static int countWays(int nums[], int wayss) {
+        int stu = 1;
+        int pageOfStudent = 0;
+        for(int i=0; i<nums.length; i++) {
+            if(pageOfStudent + nums[i] <= wayss) {
+                pageOfStudent += nums[i];
+            }
+            else {
+                stu++;
+                pageOfStudent = nums[i];
+            }
+        }
+        return stu;
+    }
+}
