@@ -1,0 +1,17 @@
+class Solution {
+    // Function to find hIndex
+    public int hIndex(int[] citations) {
+        // code here
+        Arrays.sort(citations);
+        int n = citations.length;
+        int hIndex = 0;
+        for(int i=0; i<n; i++) {
+            int atleast = n-i;
+            if(citations[i] >= atleast) {
+                hIndex = atleast;
+                break;
+            }
+        }
+        return hIndex;
+    }
+}
