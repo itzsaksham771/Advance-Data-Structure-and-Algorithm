@@ -1,0 +1,20 @@
+class Solution {
+    public int pivotIndex(int[] nums) {
+        int totalSum = 0, leftSum = 0;
+
+        // Calculate total sum of the array
+        for (int num : nums) {
+            totalSum += num;
+        }
+
+        // Iterate and check for pivot index
+        for (int i = 0; i < nums.length; i++) {
+            if (leftSum * 2 + nums[i] == totalSum) {
+                return i;
+            }
+            leftSum += nums[i];
+        }
+
+        return -1; // No pivot index found
+    }
+}
