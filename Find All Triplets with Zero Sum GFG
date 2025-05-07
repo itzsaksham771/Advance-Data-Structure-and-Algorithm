@@ -1,0 +1,42 @@
+class Solution {
+    public List<List<Integer>> findTriplets(int[] arr) {
+        // Your code here
+        List<List<Integer>> result = new ArrayList<>();
+        int n= arr.length;
+        if(n<3){ 
+            return result;
+        }
+        Map<Integer, List<Integer>> valueToIndices = new HashMap<>();
+        for(int i=0;i<n;i++){ 
+            valueToIndices.putIfAbsent(arr[i],new ArrayList<>());
+            valueToIndices.get(arr[i]).add(i);
+        }
+        for(int i=0;i<n-2;i++){ 
+            for(int j=i+1;j<n-1;j++){ 
+                int target =- (arr[i] + arr[j]);
+                if(!valueToIndices.containsKey(target)){ 
+                    continue;
+                }
+                List<Integer> indices = valueToIndices.get(target);
+                int idx = Collections.binarySearch(indices,j+1);
+                if(idx <0){ 
+                    idx = -idx -1;
+                }
+                for(int kIndex = idx; kIndex <indices.size();kIndex++){ 
+                    int k = indices.get(kIndex);
+                    result.add(Arrays.asList(i,j,k));
+                }
+            }
+        }
+        Collections.sort(result,(a,b) -> { 
+            if(a.get(0) != b.get(0)){ 
+                return a.get(0) - b.get(0);
+            }else if(a.get(1) != b.get(1)){ 
+                return a.get(1) - b.get(1);
+            } else { 
+                return a.get(2) - b.get(2);
+            }
+        });
+        return result;
+    }
+}
