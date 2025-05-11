@@ -1,0 +1,25 @@
+class Solution { 
+    public ArrayList<ArrayList<String>> anagrams(String[] arr) { 
+        
+        Map<String, ArrayList<String>> map = new LinkedHashMap<>();
+        
+        for (String word : arr) { 
+            char[] chars = word.toCharArray();
+            Arrays.sort(chars);
+            String sortedWord = new String(chars);
+            
+            if (!map.containsKey(sortedWord)) { 
+                map.put(sortedWord, new ArrayList<>());
+            }
+            
+            map.get(sortedWord).add(word);
+        }
+        
+        ArrayList<ArrayList<String>> result = new ArrayList<>();
+        for (ArrayList<String> group : map.values()) { 
+            result.add(group);
+        }
+        
+        return result;
+    }
+}
