@@ -1,0 +1,19 @@
+class Solution {
+    public long subarrayXor(int arr[], int k) {
+        // code here
+        int count = 0;
+        int xor = 0;
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for(int num : arr) {
+            xor ^= num;
+            if(xor == k) count++;
+            
+            int required = xor^k;
+            if(map.containsKey(required)) {
+                count += map.get(required);
+            }
+            map.put(xor,map.getOrDefault(xor,0)+1);
+        }
+        return count;
+    }
+}
