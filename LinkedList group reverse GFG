@@ -1,0 +1,31 @@
+class Solution {
+    public static Node reverseKGroup(Node head, int k) {
+        // code here
+      if (head == null || k <= 1) return head;
+      Node dummy = new Node(0);
+      dummy.next = head;
+      Node prev = dummy;
+      Node curr = head;
+      while (curr != null) { 
+          Node start = curr;
+          int count = 0;
+          Node temp = curr;
+          while (temp != null && count < k) { 
+              temp = temp.next;
+              count++;
+          }
+          Node prevNode = temp;
+          Node node = start;
+          while (node != temp) { 
+              Node nextNode = node.next;
+              node.next = prevNode;
+              prevNode = node;
+              node = nextNode;
+          }
+          prev.next = prevNode;
+          prev = start;
+          curr = temp;
+      }
+      return dummy.next;
+    }
+}
