@@ -1,0 +1,30 @@
+class Solution {
+    
+    public ArrayList<String> findPermutation(String s) {
+        // Code here
+        boolean used[] = new boolean[s.length()];
+        HashSet<String> set = new HashSet<>();
+        StringBuilder curr = new StringBuilder();
+        
+        genPermutation(0,s,used,curr,set);
+        return new ArrayList<>(set);
+    }
+    
+    public void genPermutation(int i, String s, boolean[] used, StringBuilder curr,
+    HashSet<String> set) {
+        if(i == s.length()) {
+            set.add(curr.toString());
+            return;
+        }
+        for(int j=0; j<s.length(); j++) {
+            if(!used[j]) {
+                used[j] = true;
+                curr.append(s.charAt(j));
+                
+                genPermutation(i+1, s, used, curr, set);
+                curr.deleteCharAt(curr.length()-1);
+                used[j] = false;
+            }
+        }
+    }
+}
