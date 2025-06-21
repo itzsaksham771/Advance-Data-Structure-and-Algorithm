@@ -1,0 +1,25 @@
+class Solution { 
+    
+    Node prev = null;
+    
+    boolean isBST(Node root) { 
+        return isBSTUtil(root);
+    }
+    
+    boolean isBSTUtil(Node node) { 
+        if (node == null) {
+            return true;
+        }
+        
+        if (!isBSTUtil(node.left)) {
+            
+            return false;
+        }
+        
+        if (prev != null && node.data <= prev.data) {
+            return false;
+        }
+        prev = node;
+        return isBSTUtil(node.right);
+    }
+}
