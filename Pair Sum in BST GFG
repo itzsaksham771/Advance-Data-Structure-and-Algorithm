@@ -1,0 +1,22 @@
+class Solution { 
+    
+    boolean findTarget(Node root, int target) { 
+        List<Integer> list = new ArrayList<>();
+        inOrder(root, list);
+        int left = 0, right = list.size() - 1;
+        while (left < right) { 
+            int sum = list.get(left) + list.get(right);
+            if (sum == target) return true;
+            else if (sum < target) left++;
+            else right--;
+        }
+        return false;
+    }
+    
+    public void inOrder(Node root, List<Integer> list) { 
+        if (root == null) return;
+        inOrder(root.left, list);
+        list.add(root.data);
+        inOrder(root.right, list);
+    }
+}
