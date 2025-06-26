@@ -1,0 +1,43 @@
+class Tree { 
+    final int NULL_NODE = -1;
+    public ArrayList<Integer> serialize(Node root) { 
+        ArrayList<Integer> list = new ArrayList<>();
+        if (root == null) return list;
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        while (!q.isEmpty()) { 
+            Node curr = q.poll();
+            if (curr == null) { 
+                list.add(NULL_NODE); 
+            } else { 
+                list.add(curr.data);
+                q.add(curr.left);
+                q.add(curr.right);
+            }
+        }
+        return list;
+    }
+    public Node deSerialize(ArrayList<Integer> arr) { 
+        if (arr == null || arr.size() == 0) return null;
+        int i = 0;
+        Node root = new Node(arr.get(i++));
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        while (!q.isEmpty() && i < arr.size()) { 
+            Node curr = q.poll();
+            int leftVal = arr.get(i++);
+            if (leftVal != NULL_NODE) { 
+                curr.left = new Node(leftVal);
+                q.add(curr.left);
+            }
+            if (i < arr.size()) { 
+                int rightVal = arr.get(i++);
+                if (rightVal != NULL_NODE) { 
+                    curr.right = new Node(rightVal);
+                    q.add(curr.right);
+                }
+            }
+        }
+        return root;
+    }
+}
