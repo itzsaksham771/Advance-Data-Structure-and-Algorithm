@@ -1,0 +1,35 @@
+/*class Node
+{
+    int data;
+    Node next;
+
+    Node(int key)
+    {
+        data = key;
+        next = null;
+    }
+}
+*/
+
+// arr is an array of Nodes of the heads of linked lists
+class Solution { 
+    Node mergeKLists(List<Node> arr) { 
+        PriorityQueue<Node> pq = new PriorityQueue<>(arr.size(), (a, b) -> a.data - b.data);
+        for (Node head : arr) { 
+            if (head != null) { 
+                pq.offer(head);
+            }
+        }
+        Node dummy = new Node(0);
+        Node current = dummy;
+        while (!pq.isEmpty()) { 
+            Node minNode = pq.poll(); 
+            current.next = minNode;
+            current = current.next;
+            if (minNode.next != null) { 
+                pq.offer(minNode.next); 
+            }
+        }
+        return dummy.next;
+    }
+}
