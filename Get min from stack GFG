@@ -1,0 +1,31 @@
+import java.util.Stack;
+class Solution { 
+    private Stack<Integer> mainStack;
+    private Stack<Integer> minStack;
+    public Solution() { 
+        mainStack = new Stack<>();
+        minStack = new Stack<>();
+    }
+    public void push(int x) { 
+        mainStack.push(x);
+        if (minStack.isEmpty() || x <= minStack.peek()) { 
+            minStack.push(x);
+        }
+    }
+    public void pop() { 
+        if (!mainStack.isEmpty()) { 
+            int removed = mainStack.pop();
+            if (!minStack.isEmpty() && removed == minStack.peek()) { 
+                minStack.pop();
+            }
+        }
+    }
+    public int peek() { 
+        if (mainStack.isEmpty()) return -1;
+        return mainStack.peek();
+    }
+    public int getMin() { 
+        if (minStack.isEmpty()) return -1;
+        return minStack.peek();
+    }
+}
