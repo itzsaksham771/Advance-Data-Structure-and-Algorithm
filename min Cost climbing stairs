@@ -1,0 +1,16 @@
+//Back-end complete function Template for Java
+
+class Solution {
+    static int minCostClimbingStairs(int[] cost) {
+        // Write your code here
+        int n = cost.length;
+        int prevPrev = 0;
+        int prev = 0;
+        for(int i=2; i<=n; i++) {
+            int curr = Math.min(prev+cost[i-1], prevPrev+cost[i-2]);
+            prevPrev = prev;
+            prev = curr;
+        }
+        return prev;
+    }
+};
