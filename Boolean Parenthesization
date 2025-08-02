@@ -1,0 +1,56 @@
+class Solution { 
+    static class Pair { 
+        int i, j;
+        boolean isTrue;
+        Pair(int i, int j, boolean isTrue) { 
+            this.i = i;
+            this.j = j;
+            this.isTrue = isTrue;
+        }
+        public boolean equals(Object o) { 
+            if (this == o) return true;
+            if (!(o instanceof Pair)) return false;
+            Pair p = (Pair) o;
+            return i == p.i && j == p.j && isTrue == p.isTrue;
+        }
+        public int hashCode() { 
+            return i * 31 * 31 + j * 31 + (isTrue ? 1 : 0);
+        }
+    }
+    static HashMap<Pair, Integer> memo;
+    static int countWays(String s) { 
+        memo = new HashMap<>();
+        return countWaysUtil(s, 0, s.length() - 1, true);
+    }
+    private static int countWaysUtil(String s, int i, int j, boolean isTrue) { 
+        if (i > j) return 0;
+        if (i == j) { 
+            if (isTrue) return s.charAt(i) == 'T' ? 1 : 0;
+            else return s.charAt(i) == 'F' ? 1 : 0;
+        }
+        Pair key = new Pair(i, j, isTrue);
+        if (memo.containsKey(key)) return memo.get(key);
+        int ways = 0;
+        for (int k = i + 1; k <= j - 1; k += 2) { 
+            char op = s.charAt(k);
+            int leftTrue = countWaysUtil(s, i, k - 1, true);
+            int leftFalse = countWaysUtil(s, i, k - 1, false);
+            int rightTrue = countWaysUtil(s, k + 1, j, true);
+            int rightFalse = countWaysUtil(s, k + 1, j, false);
+            if (op == '&') { 
+                if (isTrue) ways += leftTrue * rightTrue;
+                else ways += leftTrue * rightFalse + leftFalse * rightTrue + leftFalse * rightFalse;
+            } 
+            else if (op == '|') { 
+                if (isTrue) ways += leftTrue * rightTrue + leftTrue * rightFalse + leftFalse * rightTrue;
+                else ways += leftFalse * rightFalse;
+            } 
+            else if (op == '^') { 
+                if (isTrue) ways += leftTrue * rightFalse + leftFalse * rightTrue;
+                else ways += leftTrue * rightTrue + leftFalse * rightFalse;
+            }
+        }
+        memo.put(key, ways);
+        return ways;
+    }
+}
