@@ -1,0 +1,19 @@
+class Solution { 
+    public int maxPartitions(String s) { 
+        int[] lastIndex = new int[26];
+        for (int i = 0; i < s.length(); i++) { 
+            lastIndex[s.charAt(i) - 'a'] = i;
+        }
+        int count = 0;
+        int end = 0;
+        int start = 0;
+        for (int i = 0; i < s.length(); i++) { 
+            end = Math.max(end, lastIndex[s.charAt(i) - 'a']);
+            if (i == end) { 
+                count++;
+                start = i + 1;
+            }
+        }
+        return count;
+    }
+}
