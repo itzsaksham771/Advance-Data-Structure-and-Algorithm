@@ -1,0 +1,37 @@
+import java.util.*;
+class Solution { 
+    public int countIslands(char[][] grid) { 
+        if (grid == null || grid.length == 0) return 0;
+        int n = grid.length;
+        int m = grid[0].length;
+        int count = 0;
+        int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1};
+        int[] dy = {-1, 0, 1, -1, 1, -1, 0, 1};
+        for (int i = 0; i < n; i++) { 
+            for (int j = 0; j < m; j++) { 
+                if (grid[i][j] == 'L') { 
+                    count++;
+                    bfs(grid, i, j, dx, dy, n, m);
+                }
+            }
+        }
+        return count;
+    }
+    private void bfs(char[][] grid, int x, int y, int[] dx, int[] dy, int n, int m) { 
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[]{x, y});
+        grid[x][y] = 'W'; 
+        while (!queue.isEmpty()) { 
+            int[] cell = queue.poll();
+            int cx = cell[0], cy = cell[1];
+            for (int dir = 0; dir < 8; dir++) { 
+                int nx = cx + dx[dir];
+                int ny = cy + dy[dir];
+                if (nx >= 0 && ny >= 0 && nx < n && ny < m && grid[nx][ny] == 'L') { 
+                    grid[nx][ny] = 'W'; 
+                    queue.offer(new int[]{nx, ny});
+                }
+            }
+        }
+    }
+}
